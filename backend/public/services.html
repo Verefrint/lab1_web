@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги | Гестион</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo-container">
+            <h1>Гестион</h1>
+            <p>Профессиональные юридические услуги</p>
+        </div>
+        <div class="auth-container">
+            <form action="#" method="post">
+                <input type="text" placeholder="Логин" required>
+                <input type="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+                <a href="#">Регистрация</a>
+            </form>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul class="main-menu">
+            <li><a href="main.html">Главная</a></li>
+            <li class="active"><a href="services.html">Услуги</a></li>
+            <li><a href="team.html">Команда</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="feedback.html">Отзывы</a></li>
+            <li class="search-container">
+                <input type="text" placeholder="Поиск...">
+                <button type="submit">Найти</button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Наши услуги</h3>
+            <!-- поиск -->
+            <div class="search-service">
+                <h3>Поиск услуг</h3>
+                <form id="service-search-form">
+                    <input type="text" id="search-input" placeholder="Введите первую букву услуги">
+                    <button type="submit">Найти</button>
+                </form>
+                <div id="search-results"></div>
+            </div>
+
+            <ul>
+                <li><a href="#corporate">Корпоративное право</a></li>
+                <li><a href="#tax">Налоговое консультирование</a></li>
+                <li><a href="#labor">Трудовое право</a></li>
+                <li><a href="#realty">Недвижимость и строительство</a></li>
+                <li><a href="#bankruptcy">Банкротство</a></li>
+                <li><a href="#ip">Интеллектуальная собственность</a></li>
+            </ul>
+            
+            <div class="sidebar-banner">
+                <h4>Специальное предложение</h4>
+                <p>Комплексное юридическое сопровождение бизнеса со скидкой 15%</p>
+                <button>Узнать подробности</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main>
+            <h2>Наши услуги</h2>
+            <hr>
+
+            <!-- Добавьте этот код в секцию <main> после существующих service-section -->
+            <section class="service-detail">
+                <button class="service-toggle-btn">Подробнее о регистрации ООО</button>
+                <div class="service-dropdown">
+                    <div class="product-detail-section">
+                        <h2>Краткое описание</h2>
+                        <p class="product-summary">
+                            Полная юридическая регистрация Общества с Ограниченной Ответственностью "под ключ" с гарантией соблюдения всех требований законодательства.
+                        </p>
+                        
+                        <h2>Что входит в услугу</h2>
+                        <div class="product-features">
+                            <ul>
+                                <li>Подготовка уникального пакета документов</li>
+                                <li>Проверка названия на уникальность</li>
+                                <li>Определение оптимального размера уставного капитала</li>
+                                <li>Выбор кодов ОКВЭД</li>
+                                <li>Регистрация в налоговых органах</li>
+                                <li>Изготовление печати (по желанию)</li>
+                                <li>Открытие расчетного счета</li>
+                            </ul>
+                        </div>
+                        
+                        <h2>Подробное описание</h2>
+                        <div class="product-full-description">
+                            <p>Наши юристы сопровождают весь процесс регистрации ООО от подготовки документов до получения готового пакета. Средний срок выполнения - 3 рабочих дня после подачи документов.</p>
+                            <p>Мы предлагаем 3 пакета услуг:</p>
+                            <ol>
+                                <li><strong>Базовый</strong> (15 000 руб.) - стандартная регистрация с минимальным набором услуг</li>
+                                <li><strong>Оптима</strong> (25 000 руб.) - включает открытие счета и изготовление печати</li>
+                                <li><strong>Премиум</strong> (40 000 руб.) - полное сопровождение + годовая юридическая поддержка</li>
+                            </ol>
+                            <p>После регистрации вы получаете полный пакет документов: свидетельство ОГРН, ИНН, выписку из ЕГРЮЛ, устав с отметкой налоговой, приказ о назначении директора.</p>
+                        </div>
+                        
+                        <div class="service-action">
+                            <button class="service-consult-btn">Заказать регистрацию</button>
+                            <button class="service-consult-btn">Бесплатная консультация</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="service-detail">
+                <button class="service-toggle-btn">Подробнее о внесении изменений в ЕГРЮЛ</button>
+                <div class="service-dropdown">
+                    <div class="product-detail-section">
+                        <h2>Краткое описание</h2>
+                        <p class="product-summary">
+                            Профессиональное оформление изменений в учредительные документы и данных ЕГРЮЛ с гарантией соблюдения сроков и требований законодательства.
+                        </p>
+                        
+                        <h2>Когда требуется</h2>
+                        <div class="product-features">
+                            <ul>
+                                <li>Смена генерального директора</li>
+                                <li>Изменение состава участников</li>
+                                <li>Смена юридического адреса</li>
+                                <li>Изменение видов деятельности (ОКВЭД)</li>
+                                <li>Увеличение уставного капитала</li>
+                                <li>Смена наименования организации</li>
+                            </ul>
+                        </div>
+                        
+                        <h2>Подробное описание</h2>
+                        <div class="product-full-description">
+                            <p>Мы берем на себя весь процесс внесения изменений от подготовки документов до получения свежей выписки из ЕГРЮЛ. Средний срок выполнения - 5 рабочих дней.</p>
+                            
+                            <h4>Этапы работы:</h4>
+                            <ol>
+                                <li>Анализ изменений и подготовка документов</li>
+                                <li>Заверение документов у нотариуса (при необходимости)</li>
+                                <li>Подача документов в налоговый орган</li>
+                                <li>Получение документов о внесении изменений</li>
+                                <li>Внесение изменений в банковские реквизиты (по запросу)</li>
+                            </ol>
+                            
+                            <table>
+                                <tr>
+                                    <th>Тип изменений</th>
+                                    <th>Сроки</th>
+                                    <th>Стоимость</th>
+                                </tr>
+                                <tr>
+                                    <td>Смена директора</td>
+                                    <td>3 рабочих дня</td>
+                                    <td>8 000 руб.</td>
+                                </tr>
+                                <tr>
+                                    <td>Смена адреса</td>
+                                    <td>5 рабочих дней</td>
+                                    <td>12 000 руб.</td>
+                                </tr>
+                                <tr>
+                                    <td>Изменение УК</td>
+                                    <td>7 рабочих дней</td>
+                                    <td>15 000 руб.</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="service-action">
+                            <button class="service-consult-btn">Заказать услугу</button>
+                            <button class="service-consult-btn">Бесплатная консультация</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="service-detail">
+                <button class="service-toggle-btn">Подробнее о юридическом аудите</button>
+                <div class="service-dropdown">
+                    <div class="product-detail-section">
+                        <h2>Краткое описание</h2>
+                        <p class="product-summary">
+                            Комплексная проверка юридической чистоты бизнеса и соответствия деятельности законодательным требованиям.
+                        </p>
+                        
+                        <h2>Что проверяем</h2>
+                        <div class="product-features">
+                            <ul>
+                                <li>Учредительные документы</li>
+                                <li>Договорную базу</li>
+                                <li>Трудовые отношения</li>
+                                <li>Налоговые риски</li>
+                                <li>Соответствие лицензионным требованиям</li>
+                                <li>Интеллектуальную собственность</li>
+                            </ul>
+                        </div>
+                        
+                        <h2>Подробное описание</h2>
+                        <div class="product-full-description">
+                            <p>Юридический аудит позволяет выявить потенциальные риски до их реализации и минимизировать финансовые потери. Проводится командой из 3 специалистов в течение 5-10 рабочих дней.</p>
+                            
+                            <h4>Результаты аудита включают:</h4>
+                            <ul>
+                                <li>Детальный отчет о выявленных рисках</li>
+                                <li>Рекомендации по устранению нарушений</li>
+                                <li>План оптимизации юридических процессов</li>
+                                <li>Дорожную карту снижения налоговых рисков</li>
+                            </ul>
+                            
+                            <h4>Тарифы:</h4>
+                            <div class="price-cards">
+                                <div class="price-card">
+                                    <h5>Экспресс-аудит</h5>
+                                    <p class="price">25 000 руб.</p>
+                                    <ul>
+                                        <li>Проверка учредительных документов</li>
+                                        <li>Анализ 10 ключевых договоров</li>
+                                        <li>Выявление основных рисков</li>
+                                    </ul>
+                                </div>
+                                <div class="price-card">
+                                    <h5>Комплексный аудит</h5>
+                                    <p class="price">50 000 руб.</p>
+                                    <ul>
+                                        <li>Полная проверка всех документов</li>
+                                        <li>Анализ неограниченного числа договоров</li>
+                                        <li>Подробный отчет с рекомендациями</li>
+                                        <li>Консультация по результатам</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="service-action">
+                            <button class="service-consult-btn">Заказать аудит</button>
+                            <button class="service-consult-btn">Рассчитать стоимость</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="tax" class="service-section">
+                <h3>Налоговое консультирование</h3>
+                <img src="static/tax.jpg" alt="Налоговое консультирование" class="float-left">
+                <p>Оптимизация налогообложения и защита от претензий налоговых органов.</p>
+                
+                <h4>Мы предлагаем:</h4>
+                <ol>
+                    <li>Налоговое планирование и оптимизация</li>
+                    <li>Сопровождение налоговых проверок</li>
+                    <li>Обжалование решений налоговых органов</li>
+                    <li>Консультации по международному налогообложению</li>
+                    <li>Разработка учетной политики</li>
+                </ol>
+                
+                <h4>Наши преимущества:</h4>
+                <ul class="advantages">
+                    <li>Быстрый анализ ситуации</li>
+                    <li>Глубокая экспертиза</li>
+                    <li>Конфиденциальность</li>
+                </ul>
+                <a href="#" class="service-button">Заказать услугу</a>
+            </section>
+                        
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <p>г. Москва, ул. Юридическая, 15</p>
+                <p>Телефон: +7 (495) 123-45-67</p>
+                <p>Email: info@gestion.ru</p>
+            </div>
+            <div class="footer-section">
+                <h4>Режим работы</h4>
+                <p>Пн-Пт: 9:00 - 18:00</p>
+                <p>Сб: 10:00 - 15:00</p>
+                <p>Вс: выходной</p>
+            </div>
+            <div class="footer-section">
+                <h4>Подписаться на новости</h4>
+                <form action="#" method="post">
+                    <input type="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Юридическая компания "Гестион". Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const services = [
+                {
+                    id: "Р",
+                    title: "Регистрация ООО",
+                    description: "Полная юридическая регистрация Общества с Ограниченной Ответственностью 'под ключ'",
+                    price: "от 15 000 руб.",
+                    link: "#corporate",
+                    keywords: "регистрация ооо создание фирмы открытие компании учредительные документы"
+                },
+                {
+                    id: "В",
+                    title: "Внесение изменений в ЕГРЮЛ",
+                    description: "Профессиональное оформление изменений в учредительные документы",
+                    price: "от 8 000 руб.",
+                    link: "#corporate",
+                    keywords: "изменения егрюл смена директора изменение адреса изменение оквэд"
+                },
+                {
+                    id: "Ю",
+                    title: "Юридический аудит",
+                    description: "Комплексная проверка юридической чистоты бизнеса",
+                    price: "от 25 000 руб.",
+                    link: "#corporate",
+                    keywords: "аудит проверка юридический анализ документов"
+                },
+                {
+                    id: "Н",
+                    title: "Налоговое консультирование",
+                    description: "Оптимизация налогообложения и защита от претензий налоговых органов",
+                    price: "индивидуально",
+                    link: "#tax",
+                    keywords: "налоги консультация оптимизация налогообложения налоговые проверки"
+                },
+                {
+                    id: "Т",
+                    title: "Трудовое право",
+                    description: "Помощь в решении трудовых споров и оформлении кадровых документов",
+                    price: "от 10 000 руб.",
+                    link: "#labor",
+                    keywords: "трудовые договоры кадры увольнение трудовые споры"
+                },
+                {
+                    id: "Б",
+                    title: "Банкротство",
+                    description: "Сопровождение процедуры банкротства физических и юридических лиц",
+                    price: "от 30 000 руб.",
+                    link: "#bankruptcy",
+                    keywords: "банкротство должники кредиторы финансовое оздоровление"
+                },
+                {
+                    id: "И",
+                    title: "Интеллектуальная собственность",
+                    description: "Регистрация и защита прав на интеллектуальную собственность",
+                    price: "от 20 000 руб.",
+                    link: "#ip",
+                    keywords: "товарный знак патент авторское право интеллектуальная собственность"
+                }
+            ];
+
+            const searchForm = document.getElementById('service-search-form');
+            if (searchForm) {
+                searchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const searchInput = document.getElementById('search-input');
+                    const searchQuery = searchInput.value.trim().toLowerCase();
+                    const resultsContainer = document.getElementById('search-results');
+                    
+                    resultsContainer.innerHTML = '';
+                    
+                    if (searchQuery.length < 2) {
+                        resultsContainer.innerHTML = '<p class="no-results">Введите минимум 2 символа для поиска</p>';
+                        return;
+                    }
+                    
+                    const foundServices = services.filter(service => {
+                        // Ищем в заголовке, описании и ключевых словах
+                        return service.title.toLowerCase().includes(searchQuery) ||
+                               service.description.toLowerCase().includes(searchQuery) ||
+                               service.keywords.toLowerCase().includes(searchQuery);
+                    });
+                    
+                    if (foundServices.length > 0) {
+                        foundServices.forEach(service => {
+                            const serviceElement = document.createElement('div');
+                            serviceElement.className = 'search-result-item';
+                            serviceElement.innerHTML = `
+                                <h4>${service.title}</h4>
+                                <p>${service.description}</p>
+                                <p><strong>Стоимость:</strong> ${service.price}</p>
+                                <a href="${service.link}" class="service-button">Подробнее</a>
+                            `;
+                            resultsContainer.appendChild(serviceElement);
+                        });
+                        
+                        // Добавляем сообщение о количестве найденных результатов
+                        const countElement = document.createElement('p');
+                        countElement.style.marginTop = '10px';
+                        countElement.style.fontSize = '14px';
+                        countElement.style.color = '#7f8c8d';
+                        countElement.textContent = `Найдено услуг: ${foundServices.length}`;
+                        resultsContainer.appendChild(countElement);
+                    } else {
+                        resultsContainer.innerHTML = `
+                            <p class="no-results">По запросу "${searchQuery}" ничего не найдено</p>
+                            <p>Попробуйте изменить запрос или использовать другие ключевые слова</p>
+                        `;
+                    }
+                });
+            }
+
+            // Добавляем функционал для раскрывающихся секций
+            const toggleButtons = document.querySelectorAll('.service-toggle-btn');
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const dropdown = this.nextElementSibling;
+                    dropdown.classList.toggle('open');
+                });
+            });
+
+            // Добавляем возможность поиска при нажатии Enter
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        document.getElementById('service-search-form').dispatchEvent(new Event('submit'));
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

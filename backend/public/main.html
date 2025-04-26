@@ -30,6 +30,7 @@
             <li><a href="services.html">Услуги</a></li>
             <li><a href="team.html">Команда</a></li>
             <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="feedback.html">Отзывы</a></li>
             <li class="search-container">
                 <input type="text" placeholder="Поиск...">
                 <button type="submit">Найти</button>
@@ -42,6 +43,16 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <h3>Наши услуги</h3>
+
+            <div class="search-service">
+                <h3>Поиск по услугам</h3>
+                <form id="service-search-form">
+                    <input type="text" id="search-input" placeholder="Введите название или описание услуги">
+                    <button type="submit">Найти</button>
+                </form>
+                <div id="search-results"></div>
+            </div>
+
             <ul>
                 <li><a href="#">Корпоративное право</a></li>
                 <li><a href="#">Налоговое консультирование</a></li>
@@ -122,5 +133,68 @@
             <p>&copy; 2023 Юридическая компания "Гестион". Все права защищены.</p>
         </div>
     </footer>
+    <script>
+        document.getElementById('service-search-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const query = document.getElementById('search-input').value.trim();
+    const resultsContainer = document.getElementById('search-results');
+    
+    if (query.length < 2) {
+        resultsContainer.innerHTML = '<p class="no-results">Введите минимум 2 символа</p>';
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:8080/search.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ query }),
+            credentials: 'omit',
+            referrerPolicy: 'no-referrer-when-downgrade'
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const data = await response.json();
+        
+        if (data.error) {
+            resultsContainer.innerHTML = `<p class="no-results">Ошибка: ${data.error}</p>`;
+            return;
+        }
+
+        // Обработка результатов
+        if (!data.results || data.results.length === 0) {
+            resultsContainer.innerHTML = `
+                <p class="no-results">По запросу "${query}" ничего не найдено</p>
+                <p>Попробуйте изменить запрос</p>
+            `;
+            return;
+        }
+
+        let html = `<p>Найдено услуг: ${data.results.length}</p>`;
+        data.results.forEach(service => {
+            html += `
+                <div class="search-result-item">
+                    <h4>${service.title}</h4>
+                    <p>${service.description}</p>
+                    <p><strong>Стоимость:</strong> ${service.price}</p>
+                    <a href="${service.link}" class="service-button">Подробнее</a>
+                </div>
+            `;
+        });
+        
+        resultsContainer.innerHTML = html;
+    } catch (error) {
+        console.error('Fetch error:', error);
+        resultsContainer.innerHTML = `
+            <p class="no-results">Ошибка при выполнении запроса</p>
+            <p>${error.message}</p>
+        `;
+        }
+    });
+    </script>
 </body>
 </html>

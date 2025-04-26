@@ -127,16 +127,14 @@ nav {
     cursor: pointer;
 }
 
-/* Content Wrapper */
 .content-wrapper {
     max-width: 1200px;
     margin: 20px auto;
     display: flex;
 }
 
-/* Sidebar Styles */
 .sidebar {
-    width: 250px;
+    width: 300px;
     background-color: #ecf0f1;
     padding: 20px;
     margin-right: 20px;
@@ -730,4 +728,523 @@ footer {
         width: 100px;
         height: 100px;
     }
+}
+
+.product-detail-section {
+    margin-bottom: 40px;
+}
+
+.product-detail-section h2 {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #eaeaea;
+    padding: 10px 15px;
+    margin: 20px 0 15px;
+    border-left: 3px solid #e74c3c;
+}
+
+.product-summary {
+    color: #707070;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 16px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.product-full-description {
+    color: #484343;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    padding: 0 10px;
+}
+
+.product-features ul {
+    list-style-type: none;
+    padding: 0 10px;
+    margin: 15px 0;
+}
+
+.product-features li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    color: #2c3e50;
+}
+
+.product-features li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background-image: url('static/feature-marker.png'); /* Укажите путь к вашему изображению */
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-detail-section h2 {
+        font-size: 17px;
+    }
+    
+    .product-full-description {
+        font-size: 15px;
+        line-height: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-detail-section h2 {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+    
+    .product-summary {
+        font-size: 13px;
+    }
+    
+    .product-features li {
+        padding-left: 25px;
+    }
+    
+    .product-features li:before {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Service Dropdown Styles */
+.service-detail {
+    margin: 30px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.service-toggle-btn {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.service-toggle-btn:hover {
+    background-color: #34495e;
+}
+
+.service-toggle-btn::after {
+    content: "▼";
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.service-toggle-btn.active::after {
+    transform: rotate(180deg);
+}
+
+.service-dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background: white;
+}
+
+.service-dropdown.open {
+    max-height: 2000px;
+    transition: max-height 0.5s ease-in;
+}
+
+.service-action {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.service-consult-btn {
+    background-color: #3498db;
+    margin-left: 15px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.service-consult-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+    .service-action {
+        flex-direction: column;
+    }
+    
+    .service-action button {
+        width: 100%;
+    }
+}
+
+/* Добавьте эти стили в конец файла styles.css */
+
+/* Contact Form Enhancements */
+.contact-form-section input[type="text"],
+.contact-form-section input[type="email"],
+.contact-form-section input[type="tel"],
+.contact-form-section select,
+.contact-form-section textarea {
+    width: 100%;
+    height: 42px; /* Оптимальная высота для удобного касания */
+    padding: 10px 15px;
+    font-size: 15px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.contact-form-section textarea {
+    height: 150px; 
+    padding: 15px;
+    line-height: 1.5;
+}
+
+.contact-form-section input:focus,
+.contact-form-section select:focus,
+.contact-form-section textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.contact-form-section ::placeholder {
+    color: #999;
+    font-size: 14px;
+    opacity: 1;
+}
+
+.contact-form-section select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px;
+}
+
+.contact-form-section .submit-button {
+    width: 100%;
+    height: 46px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.contact-item {
+    background-color: #f8f9fa;
+    border-left: 3px solid #3498db;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.contact-item h4 {
+    color: #2c3e50;
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.contact-item p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 8px 0;
+}
+
+.map-container {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+}
+
+
+@media (max-width: 768px) {
+    .contact-form-section input[type="text"],
+    .contact-form-section input[type="email"],
+    .contact-form-section input[type="tel"],
+    .contact-form-section select {
+        height: 48px; 
+    }
+    
+    .contact-form-section textarea {
+        height: 180px;
+    }
+    
+    .contact-item {
+        margin-bottom: 20px;
+    }
+}
+
+/* Feedback Page Styles */
+.feedback-intro {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border-left: 3px solid #3498db;
+}
+
+.feedback-form {
+    margin-bottom: 40px;
+}
+
+.radio-group, .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.radio-group label, .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.radio-group input[type="radio"],
+.checkbox-group input[type="checkbox"] {
+    margin: 0;
+    width: auto;
+}
+
+.switch-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.switch label:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.switch input:checked + label {
+    background-color: #3498db;
+}
+
+.switch input:checked + label:before {
+    transform: translateX(26px);
+}
+
+.switch-text {
+    margin-left: 10px;
+}
+
+/* Reviews Section */
+.reviews-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.review {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 3px solid #3498db;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.review-header h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+.rating {
+    color: #f39c12;
+    font-size: 14px;
+}
+
+time {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.all-reviews-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* Image Border Styles */
+.review-image {
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 10px 0;
+    max-width: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .switch-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+/* Search Service Styles */
+.search-service {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.search-service h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+#service-search-form {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+#search-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#search-results {
+    margin-top: 15px;
+}
+
+.search-result-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 3px solid #3498db;
+}
+
+.search-result-item h4 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+}
+
+.no-results {
+    color: #e74c3c;
+    font-style: italic;
+}
+
+#service-search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#service-search-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#service-search-form button {
+    width: 100%;
+    padding: 8px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#search-results {
+    margin-top: 15px;
+    max-height: 300px;
+    overflow-y: auto;
 }
