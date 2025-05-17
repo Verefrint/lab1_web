@@ -1248,3 +1248,66 @@ time {
     max-height: 300px;
     overflow-y: auto;
 }
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+}
+
+.alert.error {
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+}
+
+.alert p {
+    margin: 0;
+    padding: 0;
+}
+
+.review {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.review-header h4 {
+    margin: 0 1rem 0 0;
+}
+
+.rating {
+    color: #ffc107;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+time {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.lawyer-mention {
+    font-style: italic;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+.alert.info {
+    background: #e7f5fe;
+    color: #0066cc;
+}
