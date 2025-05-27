@@ -14,19 +14,24 @@
             <p>Профессиональные юридические услуги</p>
         </div>
         <div class="auth-container">
-            <form action="auth.php" method="post">
-                <input type="text" placeholder="Логин" required>
-                <input type="password" placeholder="Пароль" required>
+            <form action="auth.php" method="post" id="authForm">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Пароль" required>
                 <button type="submit">Войти</button>
                 <a href="#">Регистрация</a>
             </form>
+        </div>
+        <div class="user-panel">
+            <div class="user-avatar">ДВ</div>
+            <span>Дмитрий В.</span>
+            <button class="logout-btn" id="logoutBtn">Выйти</button>
         </div>
     </header>
 
     <!-- Navigation -->
     <nav>
         <ul class="main-menu">
-            <li class="active" ><a href="main.html">Главная</a></li>
+            <li class="active"><a href="main.html">Главная</a></li>
             <li><a href="services.html">Услуги</a></li>
             <li><a href="team.html">Команда</a></li>
             <li><a href="contacts.html">Контакты</a></li>
@@ -43,7 +48,6 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <h3>Наши услуги</h3>
-
             <div class="search-service">
                 <h3>Поиск по услугам</h3>
                 <form id="service-search-form">
@@ -52,16 +56,14 @@
                 </form>
                 <div id="search-results"></div>
             </div>
-
             <ul>
-                <li><a href="#">Корпоративное право</a></li>
-                <li><a href="#">Налоговое консультирование</a></li>
-                <li><a href="#">Трудовое право</a></li>
-                <li><a href="#">Недвижимость и строительство</a></li>
-                <li><a href="#">Банкротство</a></li>
-                <li><a href="#">Интеллектуальная собственность</a></li>
+                <li><a href="#corporate">Корпоративное право</a></li>
+                <li><a href="#tax">Налоговое консультирование</a></li>
+                <li><a href="#labor">Трудовое право</a></li>
+                <li><a href="#realty">Недвижимость и строительство</a></li>
+                <li><a href="#bankruptcy">Банкротство</a></li>
+                <li><a href="#intellectual">Интеллектуальная собственность</a></li>
             </ul>
-            
             <div class="sidebar-banner">
                 <h4>Бесплатная консультация</h4>
                 <p>Первая консультация - бесплатно!</p>
@@ -71,6 +73,42 @@
 
         <!-- Main Content Area -->
         <main>
+            <!-- Slider Section -->
+            <section class="slider-section">
+                <div class="slider">
+                    <!-- Первый слайд -->
+                    <div class="item active">
+                        <img src="./static/lawyers.jpg" alt="Юридические услуги для бизнеса">
+                        <div class="slide-caption">
+                            <h3>Профессиональные юридические решения</h3>
+                            <p>Комплексное сопровождение вашего бизнеса</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Второй слайд -->
+                    <div class="item">
+                        <img src="./static/tax.jpg" alt="Налоговое консультирование">
+                        <div class="slide-caption">
+                            <h3>Налоговое консультирование</h3>
+                            <p>Оптимизация налоговой нагрузки законными методами</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Третий слайд -->
+                    <div class="item">
+                        <img src="./static/first_l.jpg" alt="Защита интеллектуальной собственности">
+                        <div class="slide-caption">
+                            <h3>Интеллектуальная собственность</h3>
+                            <p>Регистрация и защита ваших авторских прав</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопки-стрелочки -->
+                    <a class="previous" onclick="previousSlide()">&#10094;</a>
+                    <a class="next" onclick="nextSlide()">&#10095;</a>
+                </div>
+            </section>
+
             <h2>О компании</h2>
             <hr>
             
@@ -114,6 +152,7 @@
                 <p>г. Москва, ул. Юридическая, 15</p>
                 <p>Телефон: +7 (495) 123-45-67</p>
                 <p>Email: info@gestion.ru</p>
+                <p><a style="color: wheat" href="#" onclick="openPrivacyPolicy()">Политика конфиденциальности</a></p>
             </div>
             <div class="footer-section">
                 <h4>Режим работы</h4>
@@ -133,68 +172,441 @@
             <p>&copy; 2023 Юридическая компания "Гестион". Все права защищены.</p>
         </div>
     </footer>
-    <script>
-        document.getElementById('service-search-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const query = document.getElementById('search-input').value.trim();
-    const resultsContainer = document.getElementById('search-results');
-    
-    if (query.length < 2) {
-        resultsContainer.innerHTML = '<p class="no-results">Введите минимум 2 символа</p>';
-        return;
-    }
 
-    try {
-        const response = await fetch('http://localhost:8080/search.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ query }),
-            credentials: 'omit',
-            referrerPolicy: 'no-referrer-when-downgrade'
-        });
+    <!-- Кнопка корзины -->
+    <button class="cart" id="cart">
+        <img class="cart_image" src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart">
+        <div class="cart_num" id="cart_num">0</div>
+    </button>
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        const data = await response.json();
-        
-        if (data.error) {
-            resultsContainer.innerHTML = `<p class="no-results">Ошибка: ${data.error}</p>`;
-            return;
-        }
-
-        // Обработка результатов
-        if (!data.results || data.results.length === 0) {
-            resultsContainer.innerHTML = `
-                <p class="no-results">По запросу "${query}" ничего не найдено</p>
-                <p>Попробуйте изменить запрос</p>
-            `;
-            return;
-        }
-
-        let html = `<p>Найдено услуг: ${data.results.length}</p>`;
-        data.results.forEach(service => {
-            html += `
-                <div class="search-result-item">
-                    <h4>${service.title}</h4>
-                    <p>${service.description}</p>
-                    <p><strong>Стоимость:</strong> ${service.price}</p>
-                    <a href="${service.link}" class="service-button">Подробнее</a>
+    <!-- Окно корзины -->
+    <div class="popup">
+        <div class="popup__container" id="popup_container">
+            <div class="popup__item">
+                <h1 class="popup__title">Ваши выбранные услуги</h1>
+            </div>
+            <div class="popup__item" id="popup_product_list">
+                <!-- Здесь будут отображаться выбранные услуги -->
+            </div>
+            <div class="popup__item">
+                <div class="promo-code-container">
+                    <input type="text" class="custom-input" id="promo_code" placeholder="Введите промокод">
+                    <button class="custom-button" id="apply_promo">Применить</button>
                 </div>
-            `;
-        });
-        
-        resultsContainer.innerHTML = html;
-    } catch (error) {
-        console.error('Fetch error:', error);
-        resultsContainer.innerHTML = `
-            <p class="no-results">Ошибка при выполнении запроса</p>
-            <p>${error.message}</p>
-        `;
+                <div class="popup__cost">
+                    <h2 class="popup__cost-title">Итого</h2>
+                    <output class="popup__cost-value" id="popup_cost">0</output>
+                </div>
+                <div class="popup__cost">
+                    <h2 class="popup__cost-title">Скидка</h2>
+                    <output class="popup__cost-value" id="popup_discount">0</output>
+                </div>
+                <div class="popup__cost">
+                    <h2 class="popup__cost-title">Итого со скидкой</h2>
+                    <output class="popup__cost-value" id="popup_cost_discount">0</output>
+                </div>
+                <button class="popup__order-btn" id="popup_order">Оформить заявку</button>
+            </div>
+            <button class="popup__close" id="popup_close">✕</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== Slider Functions ==========
+        let slideIndex = 0;
+        let slideInterval;
+
+        function showSlides(n) {
+            const slides = document.getElementsByClassName("item");
+            
+            if (n >= slides.length) {
+                slideIndex = 0;
+            }
+            if (n < 0) {
+                slideIndex = slides.length - 1;
+            }
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            slides[slideIndex].classList.add("active");
         }
-    });
+
+        function nextSlide() {
+            showSlides(slideIndex += 1);
+            resetSlideInterval();
+        }
+
+        function previousSlide() {
+            showSlides(slideIndex -= 1);
+            resetSlideInterval();
+        }
+
+        function resetSlideInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => {
+                nextSlide();
+            }, 5000);
+        }
+
+        // Инициализация слайдера
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlides(slideIndex);
+            slideInterval = setInterval(() => {
+                nextSlide();
+            }, 5000);
+        });
+
+        // ========== Privacy Policy ==========
+        function openPrivacyPolicy() {
+            const newWindow = window.open("privacy-policy.txt", "Политика конфиденциальности", "width=600,height=600");
+            
+            newWindow.onload = function() {
+                const downloadBtn = newWindow.document.createElement('a');
+                downloadBtn.href = 'privacy-policy.txt';
+                downloadBtn.download = 'privacy-policy.txt';
+                downloadBtn.textContent = 'Скачать политику конфиденциальности';
+                downloadBtn.style.display = 'block';
+                downloadBtn.style.margin = '20px 0';
+                downloadBtn.style.padding = '10px';
+                downloadBtn.style.backgroundColor = '#364364';
+                downloadBtn.style.color = 'white';
+                downloadBtn.style.textDecoration = 'none';
+                downloadBtn.style.borderRadius = '4px';
+                newWindow.document.body.appendChild(downloadBtn);
+            };
+        }
+
+        // ========== Search Functionality ==========
+        document.getElementById('service-search-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const query = document.getElementById('search-input').value.trim();
+            const resultsContainer = document.getElementById('search-results');
+            
+            if (query.length < 2) {
+                resultsContainer.innerHTML = '<p class="no-results">Введите минимум 2 символа</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:8080/search.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ query }),
+                    credentials: 'omit',
+                    referrerPolicy: 'no-referrer-when-downgrade'
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    resultsContainer.innerHTML = `<p class="no-results">Ошибка: ${data.error}</p>`;
+                    return;
+                }
+
+                if (!data.results || data.results.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <p class="no-results">По запросу "${query}" ничего не найдено</p>
+                        <p>Попробуйте изменить запрос</p>
+                    `;
+                    return;
+                }
+
+                let html = `<p>Найдено услуг: ${data.results.length}</p>`;
+                data.results.forEach(service => {
+                    html += `
+                        <div class="search-result-item">
+                            <h4>${service.title}</h4>
+                            <p>${service.description}</p>
+                            <p><strong>Стоимость:</strong> ${service.price}</p>
+                            <a href="${service.link}" class="service-button">Подробнее</a>
+                        </div>
+                    `;
+                });
+                
+                resultsContainer.innerHTML = html;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                resultsContainer.innerHTML = `
+                    <p class="no-results">Ошибка при выполнении запроса</p>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+
+        // ========== Cart Functionality ==========
+        // Утилиты для работы с числами и валютой
+        function toNum(str) {
+            const num = Number(str.toString().replace(/\s/g, '').replace(/[^0-9.-]+/g,""));
+            return isNaN(num) ? 0 : num;
+        }
+
+        function toCurrency(num) {
+            return new Intl.NumberFormat("ru-RU", {
+                style: "currency",
+                currency: "RUB",
+                minimumFractionDigits: 0,
+            }).format(num);
+        }
+
+        // Класс для товара (услуги)
+        class Product {
+            constructor(card) {
+                this.id = card.getAttribute('data-id');
+                this.name = card.querySelector(".service-name").innerText;
+                this.price = card.querySelector(".service-price").innerText;
+                this.priceDiscount = card.querySelector(".service-price").innerText;
+            }
+        }
+
+        // Класс для корзины
+        class Cart {
+            constructor() {
+                this.products = [];
+                this.discountApplied = false;
+            }
+
+            get count() {
+                return this.products.length;
+            }
+
+            addProduct(product) {
+                this.products.push(product);
+                this.saveToLocalStorage();
+                return true;
+            }
+
+            removeProduct(index) {
+                this.products.splice(index, 1);
+                this.saveToLocalStorage();
+            }
+
+            get cost() {
+                return this.products.reduce((acc, product) => acc + toNum(product.price), 0);
+            }
+
+            get costDiscount() {
+                if (this.discountApplied) {
+                    return this.products.reduce((acc, product) => acc + (toNum(product.price) * 0.9), 0);
+                }
+                return this.products.reduce((acc, product) => acc + toNum(product.price), 0);
+            }
+
+            get discount() {
+                return this.cost - this.costDiscount;
+            }
+
+            applyDiscount() {
+                this.discountApplied = true;
+                this.saveToLocalStorage();
+            }
+
+            removeDiscount() {
+                this.discountApplied = false;
+                this.saveToLocalStorage();
+            }
+
+            saveToLocalStorage() {
+                localStorage.setItem("cart", JSON.stringify({
+                    products: this.products,
+                    discountApplied: this.discountApplied
+                }));
+            }
+
+            loadFromLocalStorage() {
+                const savedData = localStorage.getItem("cart");
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    this.products = data.products || [];
+                    this.discountApplied = data.discountApplied || false;
+                } else {
+                    this.products = [];
+                    this.discountApplied = false;
+                }
+            }
+
+            clear() {
+                this.products = [];
+                this.discountApplied = false;
+                this.saveToLocalStorage();
+            }
+        }
+
+        // Инициализация корзины
+        const myCart = new Cart();
+        myCart.loadFromLocalStorage();
+
+        // Получаем элементы DOM
+        const cartNum = document.querySelector("#cart_num");
+        const cart = document.querySelector("#cart");
+        const popup = document.querySelector(".popup");
+        const popupClose = document.querySelector("#popup_close");
+        const popupProductList = document.querySelector("#popup_product_list");
+        const popupCost = document.querySelector("#popup_cost");
+        const popupDiscount = document.querySelector("#popup_discount");
+        const popupCostDiscount = document.querySelector("#popup_cost_discount");
+        const popupOrder = document.querySelector("#popup_order");
+        const promoCodeInput = document.querySelector("#promo_code");
+        const applyPromoBtn = document.querySelector("#apply_promo");
+
+        // Обновляем счетчик товаров
+        function updateCartCounter() {
+            cartNum.textContent = myCart.count;
+        }
+
+        // Заполнение корзины
+        function fillCartPopup() {
+            popupProductList.innerHTML = '';
+            
+            if (myCart.count === 0) {
+                popupProductList.innerHTML = '<p class="no-results">Ваша корзина пуста</p>';
+                popupCost.value = toCurrency(0);
+                popupDiscount.value = toCurrency(0);
+                popupCostDiscount.value = toCurrency(0);
+                return;
+            }
+
+            myCart.products.forEach((product, index) => {
+                const productItem = document.createElement("div");
+                productItem.classList.add("popup__product");
+
+                const productWrap1 = document.createElement("div");
+                productWrap1.classList.add("popup__product-wrap");
+                
+                const productWrap2 = document.createElement("div");
+                productWrap2.classList.add("popup__product-wrap");
+
+                const productImage = document.createElement("img");
+                productImage.classList.add("popup__product-image");
+                productImage.setAttribute("src", "https://cdn-icons-png.flaticon.com/512/2092/2092693.png");
+                productImage.setAttribute("alt", product.name);
+
+                const productTitle = document.createElement("h2");
+                productTitle.classList.add("popup__product-title");
+                productTitle.textContent = product.name;
+
+                const productPrice = document.createElement("div");
+                productPrice.classList.add("popup__product-price");
+                productPrice.textContent = toCurrency(toNum(product.price));
+
+                const productDelete = document.createElement("button");
+                productDelete.classList.add("popup__product-delete");
+                productDelete.innerHTML = "✗";
+
+                productDelete.addEventListener("click", () => {
+                    myCart.removeProduct(index);
+                    fillCartPopup();
+                    updateCartCounter();
+                });
+
+                productWrap1.appendChild(productImage);
+                productWrap1.appendChild(productTitle);
+                productWrap2.appendChild(productPrice);
+                productWrap2.appendChild(productDelete);
+                productItem.appendChild(productWrap1);
+                productItem.appendChild(productWrap2);
+                popupProductList.appendChild(productItem);
+            });
+
+            popupCost.value = toCurrency(myCart.cost);
+            popupDiscount.value = toCurrency(myCart.discount);
+            popupCostDiscount.value = toCurrency(myCart.costDiscount);
+        }
+
+        // Обработчики событий
+        cart.addEventListener("click", (e) => {
+            e.preventDefault();
+            popup.classList.add("popup--open");
+            fillCartPopup();
+            promoCodeInput.value = '';
+        });
+
+        popupClose.addEventListener("click", (e) => {
+            e.preventDefault();
+            popup.classList.remove("popup--open");
+        });
+
+        popupOrder.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (myCart.count === 0) {
+                alert("Ваша корзина пуста");
+                return;
+            }
+            alert("Заявка на услуги оформлена! Наш менеджер свяжется с вами в ближайшее время.");
+            myCart.clear();
+            popup.classList.remove("popup--open");
+            updateCartCounter();
+            fillCartPopup();
+        });
+
+        // Обработчик промокода
+        applyPromoBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const promoCode = promoCodeInput.value.trim();
+            
+            if (promoCode.toUpperCase() === "ГЕСТИОН") {
+                myCart.applyDiscount();
+                fillCartPopup();
+                alert("Промокод применён! Скидка 10% активирована.");
+            } else {
+                myCart.removeDiscount();
+                fillCartPopup();
+                alert("Неверный промокод. Попробуйте снова.");
+            }
+        });
+
+        // Инициализация корзины
+        updateCartCounter();
+
+        // Добавляем кнопки "Добавить в корзину" к услугам в сайдбаре
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceItems = document.querySelectorAll('.sidebar ul li a');
+            
+            serviceItems.forEach(item => {
+                const serviceId = item.getAttribute('href').replace('#', '');
+                const serviceName = item.textContent;
+                const servicePrice = Math.floor(Math.random() * 10000) + 5000; // Случайная цена от 5000 до 15000
+                
+                item.insertAdjacentHTML('afterend', 
+                    `<div class="service-card" data-id="${serviceId}">
+                        <span class="service-name" style="display:none">${serviceName}</span>
+                        <span class="service-price" style="display:none">${servicePrice}</span>
+                        <button class="add-to-cart-btn">Добавить в корзину</button>
+                    </div>`
+                );
+                
+                const addBtn = item.nextElementSibling.querySelector('.add-to-cart-btn');
+                addBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const card = this.closest('.service-card');
+                    const product = new Product(card);
+                    
+                    if (myCart.addProduct(product)) {
+                        updateCartCounter();
+                        alert(`Услуга "${product.name}" добавлена в корзину`);
+                    }
+                });
+            });
+
+            // Простая авторизация
+            document.getElementById('authForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.elements.email.value;
+                const password = this.elements.password.value;
+                
+                if (email === 'dimave2004@gmail.com' && password === '123') {
+                    alert('Авторизация успешна! Добро пожаловать.');
+                } else {
+                    alert('Неверный email или пароль. Попробуйте снова.');
+                }
+            });
+        });
     </script>
 </body>
 </html>

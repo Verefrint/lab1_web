@@ -9,8 +9,6 @@ services:
       MYSQL_DATABASE: legal_services
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    volumes:
-      - ./db:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
 
@@ -26,7 +24,34 @@ services:
       - DB_USER=user
       - DB_PASS=password
       - DB_NAME=legal_services
-    depends_on:
-      - db
     volumes:
       - ./public:/var/www/html
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: legal_services
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: node_app
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://root:rootpassword@mongo:27017/legal_services?authSource=admin
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
+

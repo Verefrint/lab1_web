@@ -1,13 +1,16 @@
 FROM php:8.2-apache
 
-# Install mysqli extension
-RUN docker-php-ext-install mysqli
+# Install required extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Enable Apache mod_rewrite if needed
-RUN a2enmod rewrite
+# Enable Apache modules
+RUN a2enmod rewrite headers
 
-# Copy your app
-COPY ./public /var/www/html
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html
 
-# Optional: Set working directory
+# Copy application files
+COPY ./public /var/www/html/
+
+# Set working directory
 WORKDIR /var/www/html

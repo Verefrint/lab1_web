@@ -1,13 +1,41 @@
 <?php
-session_start();
 require_once 'config.php';
+session_start();
 
+// Handle Authentication
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
+    $username = $conn->real_escape_string(trim($_POST['username']));
+    $password = $_POST['password'];
+    
+    $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            // Login successful
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            header("Location: ".$_SERVER['HTTP_REFERER']);
+            exit();
+        }
+    }
+    
+    // If authentication fails
+    header("Location: ".$_SERVER['HTTP_REFERER']."?error=1");
+    exit();
+}
+
+// Initialize variables for contact form
 $contactErrors = [];
 $contactSuccess = false;
 $contactFormData = [];
 $newsletterError = '';
 $newsletterSuccess = false;
 
+// Handle Contact Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     $name = $conn->real_escape_string(trim($_POST['name'] ?? ''));
     $email = $conn->real_escape_string(trim($_POST['email'] ?? ''));
@@ -15,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     $subject = $conn->real_escape_string(trim($_POST['subject'] ?? ''));
     $message = $conn->real_escape_string(trim($_POST['message'] ?? ''));
     
+    // Validation
     if (empty($name)) $contactErrors['name'] = 'Пожалуйста, введите ваше имя';
     if (empty($email)) {
         $contactErrors['email'] = 'Пожалуйста, введите email';
@@ -23,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     }
     if (empty($message)) $contactErrors['message'] = 'Пожалуйста, введите сообщение';
     
+    // If no errors, save to database
     if (empty($contactErrors)) {
         $stmt = $conn->prepare("INSERT INTO contacts (name, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $name, $email, $phone, $subject, $message);
@@ -46,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     }
 }
 
+// Handle Newsletter Subscription
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newsletter_email'])) {
     $newsletterEmail = $conn->real_escape_string(trim($_POST['newsletter_email'] ?? ''));
     
@@ -79,10 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newsletter_email'])) 
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
-
-$conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -100,12 +128,19 @@ $conn->close();
             <p>Профессиональные юридические услуги</p>
         </div>
         <div class="auth-container">
-            <form action="auth.php" method="post">
-                <input type="text" placeholder="Логин" required>
-                <input type="password" placeholder="Пароль" required>
-                <button type="submit">Войти</button>
-                <a href="#">Регистрация</a>
-            </form>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <div class="user-welcome">
+                    Добро пожаловать, <?= htmlspecialchars($_SESSION['username']) ?>
+                    <a href="logout.php">Выйти</a>
+                </div>
+            <?php else: ?>
+                <form action="" method="post">
+                    <input type="text" name="username" placeholder="Логин" required>
+                    <input type="password" name="password" placeholder="Пароль" required>
+                    <button type="submit">Войти</button>
+                    <a href="register.php">Регистрация</a>
+                </form>
+            <?php endif; ?>
         </div>
     </header>
 
@@ -115,7 +150,7 @@ $conn->close();
             <li><a href="main.html">Главная</a></li>
             <li><a href="services.html">Услуги</a></li>
             <li><a href="team.html">Команда</a></li>
-            <li class="active"><a href="contacts.html">Контакты</a></li>
+            <li class="active"><a href="contacts.php">Контакты</a></li>
             <li><a href="feedback.php">Отзывы</a></li>
             <li class="search-container">
                 <input type="text" placeholder="Поиск...">
@@ -160,41 +195,41 @@ $conn->close();
                 </div>
             <?php endif; ?>
         
-        <section class="contact-form-section">
-            <form method="post">
-                <div class="form-group">
-                    <label for="name">Ваше имя:</label>
-                    <input type="text" id="name" name="name" value="<?= htmlspecialchars($formData['name'] ?? '') ?>" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($formData['email'] ?? '') ?>" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Телефон:</label>
-                    <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($formData['phone'] ?? '') ?>">
-                </div>
-                
-                <div class="form-group">
-                    <label for="subject">Тема обращения:</label>
-                    <select id="subject" name="subject">
-                        <option value="consultation" <?= ($formData['subject'] ?? '') === 'consultation' ? 'selected' : '' ?>>Консультация</option>
-                        <option value="service" <?= ($formData['subject'] ?? '') === 'service' ? 'selected' : '' ?>>Заказ услуги</option>
-                        <option value="feedback" <?= ($formData['subject'] ?? '') === 'feedback' ? 'selected' : '' ?>>Обратная связь</option>
-                        <option value="other" <?= ($formData['subject'] ?? '') === 'other' ? 'selected' : '' ?>>Другое</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Сообщение:</label>
-                    <textarea id="message" name="message" rows="5" required><?= htmlspecialchars($formData['message'] ?? '') ?></textarea>
-                </div>
-                
-                <button type="submit" class="submit-button">Отправить</button>
-            </form>
-        </section>
+            <section class="contact-form-section">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="name">Ваше имя:</label>
+                        <input type="text" id="name" name="name" value="<?= htmlspecialchars($contactFormData['name'] ?? '') ?>" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="<?= htmlspecialchars($contactFormData['email'] ?? '') ?>" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон:</label>
+                        <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($contactFormData['phone'] ?? '') ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Тема обращения:</label>
+                        <select id="subject" name="subject">
+                            <option value="consultation" <?= ($contactFormData['subject'] ?? '') === 'consultation' ? 'selected' : '' ?>>Консультация</option>
+                            <option value="service" <?= ($contactFormData['subject'] ?? '') === 'service' ? 'selected' : '' ?>>Заказ услуги</option>
+                            <option value="feedback" <?= ($contactFormData['subject'] ?? '') === 'feedback' ? 'selected' : '' ?>>Обратная связь</option>
+                            <option value="other" <?= ($contactFormData['subject'] ?? '') === 'other' ? 'selected' : '' ?>>Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Сообщение:</label>
+                        <textarea id="message" name="message" rows="5" required><?= htmlspecialchars($contactFormData['message'] ?? '') ?></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Отправить</button>
+                </form>
+            </section>
             
             <section class="contact-info-section">
                 <h3>Наши контакты</h3>
@@ -273,3 +308,6 @@ $conn->close();
     </footer>
 </body>
 </html>
+<?php
+$conn->close();
+?>
